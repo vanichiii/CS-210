@@ -30,22 +30,15 @@ request loadbalancer::getRequest()
       requestQueue.pop();
       return r;
    }
-
-
-
-
-
-
-
    // ignore warning here about no return value
 }
 
 bool loadbalancer::isRequestQueueEmpty()
 {
-  
+  return requestQueue.empty();
 } 
 
 int loadbalancer::getSize()
 {
-  
+  return requestQueue.size();
 } 
