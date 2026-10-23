@@ -48,11 +48,19 @@ int main()
    {
       webserver w((char) (i+65));
       webarray[i] = w;
-      webarray[i].addRequest(lb.getRequest(), lb.getTime());
+      int startTime = lb.getTime();
+      request initialReq = lb.getRequest();
+      webarray[i].addRequest(initialReq, startTime);
    }
    // loop
    while (lb.getTime() < 10000)
    {
+       // every random set of time, or get a new request
+      if ((rand() % 100) < 10)
+      {
+         request r = createRandomRequest();
+         lb.addRequest(r);
+      }
       int currTime = lb.getTime();
       // check each webserver if it's done
       if(webarray[currTime % NUM_SERVERS].isRequestDone(currTime))
@@ -65,7 +73,6 @@ int size = lb.getSize();
 
 cout << "Finished at " << currTime << " "
      << webarray[currTime % NUM_SERVERS].getName();
-
 cout << " pid " << r.pid << "/" << size
      << " process time was " << r.processTime
      << " processed request from " << r.source
@@ -73,12 +80,6 @@ cout << " pid " << r.pid << "/" << size
 
 // Give the server the request we already retrieved
 webarray[currTime % NUM_SERVERS].addRequest(next, currTime);
-      }
-      // every random set of time, or get a new request
-      if ((rand() % 100) < 10)
-      {
-         request r = createRandomRequest();
-         lb.addRequest(r);
       }
       lb.incTime();
    }
