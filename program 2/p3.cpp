@@ -35,9 +35,9 @@ int main()
    loadbalancer lb;
    
    // start off with a "full" queue
-   for (int i = 0; i < 10; i++)
+   for (int i = 0; i < 10; ++i)
    {
-      request r = createRandomRequest();
+      request r = (createRandomRequest());
       lb.addRequest(r);
 
    }
@@ -49,10 +49,6 @@ int main()
       webserver w((char) (i+65));
       webarray[i] = w;
       webarray[i].addRequest(lb.getRequest(), lb.getTime());
-
-
-
-
    }
    // loop
    while (lb.getTime() < 10000)
