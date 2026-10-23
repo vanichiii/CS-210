@@ -12,7 +12,7 @@ int loadbalancer::getTime()
 
 void loadbalancer::incTime()
 {
-   return systemTime++;
+   systemTime++;
 }
   
 void loadbalancer::addRequest(request r)
