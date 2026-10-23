@@ -54,33 +54,32 @@ int main()
    }
    // loop
    while (lb.getTime() < 10000)
-   {
-       // every random set of time, or get a new request
-      if ((rand() % 100) < 10)
-      {
-         request r = createRandomRequest();
-         lb.addRequest(r);
-      }
-      int currTime = lb.getTime();
-      // check each webserver if it's done
-      if(webarray[currTime % NUM_SERVERS].isRequestDone(currTime))
-      {
-       request r = webarray[currTime % NUM_SERVERS].getRequest();
+{
+    int currTime = lb.getTime();
+    int size = lb.getSize();
 
-// Get the next request before checking the queue size
-request next = lb.getRequest();
-int size = lb.getSize();
+    if (webarray[currTime % NUM_SERVERS].isRequestDone(currTime))
+    {
+        request r =
+            webarray[currTime % NUM_SERVERS].getRequest();
 
-cout << "Finished at " << currTime << " "
-     << webarray[currTime % NUM_SERVERS].getName();
-cout << " pid " << r.pid << "/" << size
-     << " process time was " << r.processTime
-     << " processed request from " << r.source
-     << " to " << r.destination << endl;
+        cout << "Finished at " << currTime << " "
+             << webarray[currTime % NUM_SERVERS].getName()
+             << " pid " << r.pid << "/" << size
+             << " process time was " << r.processTime
+             << " processed request from " << r.source
+             << " to " << r.destination << endl;
 
-// Give the server the request we already retrieved
-webarray[currTime % NUM_SERVERS].addRequest(next, currTime);
-      }
-      lb.incTime();
+        webarray[currTime % NUM_SERVERS].addRequest(
+            lb.getRequest(), currTime);
+    }
+
+    if (rand() % 10 == 0)
+    {
+        request r = createRandomRequest();
+        lb.addRequest(r);
+    }
+
+    lb.incTime();
    }
 }
