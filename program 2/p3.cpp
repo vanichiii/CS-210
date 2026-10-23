@@ -66,9 +66,7 @@ int main()
         cout << "Finished at " << currTime << " "
              << webarray[currTime % NUM_SERVERS].getName()
              << " pid " << r.pid << "/" << size
-             << " process time was " << r.processTime
-             << " processed request from " << r.source
-             << " to " << r.destination << endl;
+             << " process time was " << r.processTime << endl;
 
         webarray[currTime % NUM_SERVERS].addRequest(
             lb.getRequest(), currTime);
