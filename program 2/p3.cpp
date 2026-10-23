@@ -44,7 +44,7 @@ int main()
    
    // an array of webservers, each given an initial request to process
    webserver webarray[NUM_SERVERS];
-   for (int i = 0; i < NUM_SERVERS; i++)
+   for (int i = 0; i < NUM_SERVERS; ++i)
    {
       webserver w((char) (i+65));
       webarray[i] = w;
